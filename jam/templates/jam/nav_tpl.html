@@ -1,0 +1,13 @@
+<nav class="nav mb-4">
+<a class="nav-link active lnk h2" href="{%url 'home'%}">Home</a>
+{%for i in genres%}
+<a class="nav-link lnk" href="{{i.get_absolute_url}}">{{i.name}}</a>
+{%endfor%}
+
+    {%if request.user.is_authenticated%}
+    <p class="h2">{{user.username}}</p>
+    {%else%}
+    <a class="nav-link active lnk h2" href="{%url 'login'%}">Login</a>|
+    <a class="nav-link active lnk h2" href="{%url 'register'%}">Register</a>
+    {%endif%}
+</nav>

@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+{%load static%}
+{%load cache%}
+{%load nav%}
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{title}}</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <link rel="stylesheet" href="{%static 'css/style.css'%}">
+</head>
+<body>
+
+{% cache 50 nav %}
+{%block nav%}
+{%get_genres%}
+{%endblock nav%}
+{% endcache %}
+
+{%block info%}
+<div class="jumbotron jumbotron-fluid container text-center mt-5">
+    <div class="container">
+        {%if request.user.is_authenticated%}
+        <h1 class="display-1">{{user.username}}</h1>
+        {%else%}
+         <h1 class="display-1">The Jam Archives</h1>
+        {%endif%}
+
+
+        <p class="h2">This is an archive of the music community This Is My Jam. From 2011 to 2015, every song posted
+            here was <a class="j-a" href="/">someone’s favorite</a>.</p>
+        <p class="h2">
+            From <a class="j-a" href="/">hit releases</a> to <a class="j-a" href="/">rare finds</a> to
+            <a class="j-a" href="/">old gold</a>, Jam is home to over two million carefully hand-picked songs.
+            All jams, no filler.
+        </p>
+        <p class="h2">
+            Explore the archives and browse the song collections of the <a class="j-a" href="/">members</a> who
+            made Jam what it was. Get every
+            collection as a Spotify playlist, .
+        </p>
+        <p class="h2">
+            And You can add Your own Favourite Band in the <a class="j-a" href="/">list</a>.
+        </p>
+    </div>
+</div>
+{%endblock info%}
+
+{%block search%}
+{%endblock search%}
+
+{%block content%}
+{%endblock content%}
+
+{%if page_obj.has_other_pages%}
+<div class="container mt-3">
+    <nav aria-label="Page navigation example">
+        <ul class="pagination">
+            {%if page_obj.has_previous%}
+            <li class="page-item">
+                <a class="page-link" href="?page={{ page_obj.previous_page_number }}" aria-label="Previous">
+                    <span aria-hidden="true">&laquo;</span>
+                </a>
+            </li>
+            {%endif%}
+
+            {%for i in page_obj.paginator.page_range%}
+            {%if page_obj.number == i%}
+            <li class="page-item"><a class="page-link" href="?page={{ i }}">{{i}}</a></li>
+            {%elif i > page_obj.number|add:-3 and i < page_obj.number|add:3%}
+            <li class="page-item"><a class="page-link" href="?page={{ i }}">{{i}}</a></li>
+            {%endif%}
+            {%endfor%}
+
+            {%if page_obj.has_next%}
+            <li class="page-item">
+                <a class="page-link" href="?page={{ page_obj.next_page_number }}" aria-label="Next">
+                    <span aria-hidden="true">&raquo;</span>
+                </a>
+            </li>
+            {%endif%}
+        </ul>
+    </nav>
+</div>
+{%endif%}
+
+</body>
+</html>

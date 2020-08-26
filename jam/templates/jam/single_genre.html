@@ -1,0 +1,23 @@
+{%extends 'base.html'%}
+
+{%block info%}
+{%endblock info%}
+
+{%block content%}
+<div class="container mt-2">
+    <div class="bnd-cnt">
+        {%for i in bands%}
+        <div class="bnd-item">
+            <div class="blackout">
+                {%if i.photo%}
+                <img src="{{i.photo.url}}" alt="123" class="bnd-photo">
+                {%else%}
+                <img src="https://i.pinimg.com/originals/c6/7d/fa/c67dfada3e9060a32334d4a6ce89119e.jpg" alt="1" class="bnd-photo">
+                {%endif%}
+            </div>
+            <h5 class="bnd-title"><a class="bnd-link" href="{{i.get_absolute_url}}">{{i.name}}</a></h5>
+        </div>
+        {%endfor%}
+    </div>
+</div>
+{%endblock content%}
